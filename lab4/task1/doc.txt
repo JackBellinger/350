@@ -1,0 +1,14 @@
+
+// Lela Bones
+// Task 1: Write a C main function that takes one command-line argument, the name of an input
+// file. The input file contains exactly one integer spread out over a single line up to 80
+// characters. For example, the integer 3579 is embedded in the line az3mqrm5t?7!z*&gqmzt9v
+/*******************************************************************************************************
+//                              The program should do the following:                                  //
+//      a. Open and read the input file, accumulating the discovered digit characters into a char     //
+//      arra (str)                                                                                    //
+//      b. Conver the string to an int (do not use atoi function).                                    //
+//      c. Add 10 to the integer.                                                                     //
+//      d. Convert the sum back to a string (using dunction convIntToStr.                             //
+//      e. Make a system call to write the string to standard output.                                 //
+*******************************************************************************************************/
