@@ -22,8 +22,8 @@ int main(int argc, char** argv)
 	int i, read_len;
 	for( i = file1_len-1; i >= 0; i--)
 	{
-		readlen = pread(fd, buffer, buffer_size, i);
-		pwrite(fd2, buffer, buffer_size, i);
+		read_len = pread(fd, buffer, buffer_size, i);
+		pwrite(fd2, buffer, read_len, i);
 		// lseek(fd, i, SEEK_SET);
 		// read_len = read(fd, buffer, buffer_size);
 		// write(fd2, buffer, read_len);
