@@ -1,0 +1,34 @@
+all :
+
+OBJDIR := output
+CFILES  := Src/Application/main.c Src/Core/data.c Lib/routines.c
+ASFILES := Src/Application/startup.s Lib/sqrt.s
+
+target = ${OBJDIR}/$(patsubst %.s,%.o,$(notdir ${1}))
+obj.c :=
+obj.s :=
+define obj
+  $(call target,${1}) : ${1} | ${OBJDIR}
+  obj$(suffix ${1}) += $(call target,${1})
+  ${1} : ; mkdir -p `dirname $$@` && touch $$@ # Create the source for testing. Remove this.
+endef
+
+define SOURCES
+  $(foreach src,${1},$(eval $(call obj,${src})))
+endef
+
+$(eval $(call SOURCES,${CFILES}))
+$(eval $(call SOURCES,${ASFILES}))
+
+all : ${obj.c} ${obj.s}
+
+${obj.c} : % :
+    @echo cc -c -o $@ $^; touch $@ # echo and touch are for testing. Remove these.
+
+${obj.s} : % :
+    @echo as -o $@ $^; touch $@ # echo and touch are for testing. Remove these.
+
+${OBJDIR} :
+    mkdir $@
+
+.PHONY: all
