@@ -1,11 +1,3 @@
-
-/*struct sigaction {
-void (*) (int) sa_hadler;   // function, SIG_DFL or SIG_IGN
-sigset_t sa_mask;           // signals to block in sa_handler
-int sa_flags;               // signal actoin modifiers
-};
-*/
-
 #include <sys/types.h>
 #include <signal.h>
 #include <stdlib.h>

@@ -14,7 +14,6 @@ int main(int argc, char* argv[])
 {
 	struct sigaction act;
 
-	// When a signal is used with act, the ouch() function will be called
 	act.sa_handler = ouch;
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = 0;

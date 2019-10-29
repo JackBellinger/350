@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <string.h>	// For strlen (I didn't want to use this, but it's the only way I won't get a warning)
+#include <string.h>
 
 int main(int argc, char* argv[])
 {
@@ -27,8 +27,6 @@ int main(int argc, char* argv[])
 	}
 	else if(pid == 0)
 	{
-		// Child process writes "Hi, Mom." to the file 'foo', and then terminates.
-
 		outfile = open("foo", O_WRONLY|O_CREAT|O_EXCL, 0755);
 		char hello[] = "Hi, Mom.";
 
@@ -39,8 +37,6 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
-		// Parent process reads the file 'foo' and then writes it to the screen
-
 		wait(&pid);
 
 		infile = open("foo", O_RDONLY);
