@@ -40,11 +40,11 @@ void* avg(void* arg)
 			if(scores_copy[j] < scores_copy[i])
 				swap(scores_copy+i, scores_copy+j);
 			//{
-				//mutex so there's no race condition with min max - not neccessary with copy
-				//pthread_mutex_lock(&scores_mutex);
+				// mutex so there's no race condition with min max - not neccessary with copy
+				// pthread_mutex_lock(&scores_mutex);
 				// swap elements
-				//swap(scores_copy[i], scores_copy[j]);
-				//pthread_mutex_unlock(&scores_mutex);
+				// swap(scores_copy[i], scores_copy[j]);
+				// pthread_mutex_unlock(&scores_mutex);
 			//}
 	//int median = ((scores_copy[10] + scores_copy[9]) / 2.0);
 	//printf("median is %d", median);
