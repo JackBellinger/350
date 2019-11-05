@@ -9,10 +9,15 @@ pthread_mutex_t scores_mutex= PTHREAD_MUTEX_INITIALIZER;
 void* get_scores(void* arg)
 {
 	int* scores = (int*)arg;
-	int i;
+	int i,j;
 	for(i = 0; i < 20; i++)
 		scores[i] = i;
-		//scanf("%d", scores+i)
+		//scanf("%d", scores+i);
+
+	for(i=0; i<20; i++)
+		for(j=i+1; j<20; j++)
+			if(scores[j] < scores[i])
+				swap(scores+i, scores+j);
 	//return scores;
 	pthread_exit(NULL);
 }
@@ -32,13 +37,8 @@ void* avg(void* arg)
 		sum += scores[i];
 	printf("average is %d\n", sum / 20);
 
-	int scores_copy[20];
-	memcpy((void*)scores_copy, scores, 20*sizeof(int));
 	// the following two loops sort the array x in ascending order
-	for(i=0; i<20; i++)
-		for(j=i+1; j<20; j++)
-			if(scores_copy[j] < scores_copy[i])
-				swap(scores_copy+i, scores_copy+j);
+
 			//{
 				// mutex so there's no race condition with min max - not neccessary with copy
 				// pthread_mutex_lock(&scores_mutex);
@@ -48,27 +48,25 @@ void* avg(void* arg)
 			//}
 	//int median = ((scores_copy[10] + scores_copy[9]) / 2.0);
 	//printf("median is %d", median);
-	printf("median is %d\n", scores[10]);
 
-	//return scores;
-	pthread_exit(NULL);
+
+	return (void*)sum;
+	//pthread_exit(NULL);
 }
 
 //prints the min and max of the score list
 void* min_max(void* arg)
 {
 	int* scores = (int*)arg;
-	int i, min = -1, max = 0;
-	for(i = 1; i < 20; i++)
-	{
-		if(scores[i] < min | min ==-1)
-			min = scores[i];
-		if(scores[i] > max)
-			max = scores[i];
-	}
 
-	//return scores;
-	pthread_exit(NULL);
+	int minmax[2];
+	minmax[0] = scores[0];
+	minmax[1] = scores[12];
+	printf("====%d\n", scores[10]);
+	printf("====%d\n", minmax[1]);
+
+	return (void*)minmax;
+	//pthread_exit(NULL);
 }
 
 void* clear_buf(void* arg)
@@ -99,10 +97,15 @@ int main(int argc, char** argv)
 	for(i = 0; i < 20; i++)
 		printf("%d", scores[i]);
 	printf("\n");
+
+	int sum;
+	int minmax[2];
 	pthread_create(&thread_id[1], NULL, avg, (void*)scores);
 	pthread_create(&thread_id[2], NULL, min_max, (void*)scores);
-	pthread_join(thread_id[1], NULL);
-	pthread_join(thread_id[2], NULL);
+	pthread_join(thread_id[1], (void*)&sum);
+	printf("median is %d\n", scores[10]);
+	pthread_join(thread_id[2], (void*)minmax);
+	printf("min is %d, max is %d\n", minmax[0], minmax[1]);
 
 	pthread_create(&thread_id[3], NULL, clear_buf, (void*)scores);
 	pthread_join(thread_id[3], NULL);
