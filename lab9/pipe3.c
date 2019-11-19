@@ -27,9 +27,7 @@ int main()
     	{
     		char wBuffer[BUFSIZ + 1];
 			close(file_pipes[1]);//did you mean to say close the write end?
-        	sprintf(buffer, "%d", file_pipes[0]);
-        	// sprintf(wBuffer, "%d", file_pipes[1]);
-       		(void)execl("pipe4","pipe4", buffer, (char*)0);
+       		(void)execl("pipe4","pipe4", file_pipes[0], (char*)0);
     	    exit(EXIT_FAILURE);
     	}
     	else
