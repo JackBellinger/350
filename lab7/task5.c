@@ -19,18 +19,17 @@ int main(int argc, char* argv[])
 	sigprocmask(SIG_BLOCK, &sigs, &old);
 
 	for(i = 1; i <= 5; i++){
-		printf("%d \n", i);
+		printf("Int and quit blocked %d \n", i);
 		sleep(1);
 	}
+	sigset_t unblock;
+	sigemptyset(&unblock);
+	sigdelset(&unblock, SIGINT);
 
-	sigemptyset(&sigs);
-
-	sigaddset(&sigs, SIGINT);
-
-	sigprocmask(SIG_BLOCK, &sigs, &old);
+	sigprocmask(SIG_UNBLOCK, &unblock, &old);
 
 	for(i = 1; i <= 5; i++){
-		printf("%d \n", i);
+		printf("Only quit blocked %d \n", i);
 		sleep(1);
 	}
 
