@@ -14,7 +14,7 @@ void* producer()
 	{
 		if(count == 10)
 		{
-			puts("prod pause");
+			puts("producer pause");
 			pause();
 		}
 		count ++;
@@ -31,7 +31,7 @@ void* consumer()
 	{
 		if(count == 0)
 		{
-			puts("cons pause");
+			puts("consumer pause");
 			pause();
 		}
 		count --;
